@@ -1,0 +1,27 @@
+{
+    "development": {
+      "username": "root",
+      "password": "Docente.12",
+      "database": "parlamentapp",
+      "host": "10.2.1.82",
+      "dialect": "mysql",
+      "TOKEN_SECRET": "mySecret"
+    },
+    "test": {
+      "username": "root",
+      "password": "Docente.12",
+      "database": "parlamentapp",
+      "host": "10.2.1.82",
+      "dialect": "mysql",
+      "TOKEN_SECRET": "mySecret"
+    },
+    "production": {
+      "username": "root",
+      "password": null,
+      "database": "parlamentapp",
+      "host": "127.0.0.1",
+      "dialect": "mysql",
+      "TOKEN_SECRET": "mySecret"
+    }
+  }
+  

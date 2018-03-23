@@ -1,0 +1,20 @@
+version: '2'
+services:
+  nodeBack:
+    image: node-back
+    container_name: nodeBack
+    ports:
+      - "3050:3000"
+      - "3051:3001"
+      - "9229:9229"
+    volumes:
+      - ../:/usr/src
+    links:
+     - postgresql:database
+  postgresql:
+    image: postgres:9.3
+    container_name: postgres
+    ports:
+      - "3306:3306"
+    environment:
+      POSTGRES_PASSWORD: example

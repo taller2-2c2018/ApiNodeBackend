@@ -1,26 +1,29 @@
 {
     "development": {
-      "username": "root",
-      "password": "Docente.12",
-      "database": "parlamentapp",
-      "host": "10.2.1.82",
-      "dialect": "mysql",
+      "username": "postgres",
+      "password": "example",
+      "database": "postgres",
+      "host": "172.18.0.3",
+      "dialect": "postgres",
+      "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"
     },
     "test": {
       "username": "root",
-      "password": "Docente.12",
-      "database": "parlamentapp",
-      "host": "10.2.1.82",
-      "dialect": "mysql",
+      "password": null,
+      "database": "apinodetest",
+      "host": "localhost",
+      "dialect": "postgres",
+      "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"
     },
     "production": {
       "username": "root",
       "password": null,
-      "database": "parlamentapp",
-      "host": "127.0.0.1",
-      "dialect": "mysql",
+      "database": "apinode",
+      "host": "localhost",
+      "dialect": "postgres",
+      "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"
     }
   }

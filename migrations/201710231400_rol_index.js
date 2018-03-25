@@ -1,10 +1,9 @@
 module.exports = {
 
     up: (queryInterface, Sequelize) => {
-        return queryInterface.sequelize.query("ALTER TABLE rol ADD UNIQUE INDEX idx_rol_nombre (nombre(50));")
-
+        return queryInterface.sequelize.query("CREATE INDEX idx_rol_nombre ON rol (nombre);")
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.sequelize.query("ALTER TABLE rol DROP INDEX idx_rol_nombre;")
+        return queryInterface.sequelize.query("DROP INDEX idx_rol_nombre;")
     }
 }

@@ -15,7 +15,7 @@ module.exports = {
                 nombre: Sequelize.STRING,
                 password: Sequelize.STRING
             }).then(function () {
-                return queryInterface.sequelize.query("ALTER TABLE usuario ADD UNIQUE INDEX idx_user_email (email(50));")
+                return queryInterface.sequelize.query("CREATE INDEX idx_user_email ON usuario (email);")
             }).then(function () {
                 return queryInterface.createTable('rol', {
                     id: {

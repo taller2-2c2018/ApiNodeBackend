@@ -72,7 +72,6 @@ module.exports = function (sequelize) {
       }
     })
     Usuario.belongsTo(models.Organismo)
-    Usuario.hasMany(models.Consolidacion,{as: 'Consolidaciones'})
   }
 
   Usuario.getMsgEmailsNoMatch = function () {

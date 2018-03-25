@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   nodeBack:
     image: node-back
@@ -7,14 +7,21 @@ services:
       - "3050:3000"
       - "3051:3001"
       - "9229:9229"
+    tty: true
     volumes:
       - ../:/usr/src
     links:
-     - postgresql:database
-  postgresql:
-    image: postgres:9.3
+     - db:database
+  db:
     container_name: postgres
-    ports:
-      - "3306:3306"
+    image: postgres
+    restart: always
+#    ports:
+#     - "3052:5432"
     environment:
       POSTGRES_PASSWORD: example
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 8080:8080

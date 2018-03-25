@@ -15,8 +15,6 @@ module.exports = function (sequelize) {
 
   Organismo.associate = function (models) {
     Organismo.hasMany(models.Usuario)
-    Organismo.hasMany(models.Derivacion, {as: 'Derivaciones'})
-    Organismo.hasMany(models.AnexoRespuesta, {as: 'Anexos'})    
   }
 
   return Organismo

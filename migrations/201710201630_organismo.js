@@ -26,7 +26,7 @@ module.exports = {
     down: (queryInterface, Sequelize) => {
         return queryInterface.sequelize.query("UPDATE usuario SET organismo_id = null where organismo_id is not null;")
             .then(function () {
-                return queryInterface.sequelize.query("ALTER TABLE `usuario` DROP FOREIGN KEY `usuario_organismo_id_fk`;")
+                return queryInterface.sequelize.query("ALTER TABLE usuario DROP FOREIGN KEY usuario_organismo_id_fk;")
                     .then(function () {
                         return queryInterface.dropTable('organismo')
                     })

@@ -19,9 +19,9 @@ module.exports = {
       .then(function () {
         return queryInterface.bulkInsert('usuario', [{
           id: 1,
-          nombre: 'Leandro Ferrigno',
-          email: 'lferrigno@cys.com.ar',
-          password: bcrypt.hashSync('lferrigno', bcrypt.genSaltSync(10)),
+          nombre: 'Nicolas Araya',
+          email: 'naraya@taller.com.ar',
+          password: bcrypt.hashSync('naraya', bcrypt.genSaltSync(10)),
           created_at: new Date(),
           updated_at: new Date(),
           telefono: '55555555',
@@ -31,7 +31,7 @@ module.exports = {
         {
           id: 2,
           nombre: 'Nicolas Ledesma',
-          email: 'nledesma@cys.com.ar',
+          email: 'nledesma@taller.com.ar',
           password: bcrypt.hashSync('nledesma', bcrypt.genSaltSync(10)),
           created_at: new Date(),
           updated_at: new Date(),
@@ -41,9 +41,9 @@ module.exports = {
         },
         {
           id: 3,
-          nombre: 'Rodrigo Luna',
-          email: 'rluna@cys.com.ar',
-          password: bcrypt.hashSync('rluna', bcrypt.genSaltSync(10)),
+          nombre: 'Fernando Cancellara',
+          email: 'fcancellara@taller.com.ar',
+          password: bcrypt.hashSync('fcancellara', bcrypt.genSaltSync(10)),
           created_at: new Date(),
           updated_at: new Date(),
           telefono: '55555555',
@@ -52,37 +52,15 @@ module.exports = {
         },
         {
           id: 4,
-          nombre: 'Nicolas Araya',
-          email: 'naraya@cys.com.ar',
-          password: bcrypt.hashSync('naraya', bcrypt.genSaltSync(10)),
+          nombre: 'FernandoNitz',
+          email: 'fnitz@cys.com.ar',
+          password: bcrypt.hashSync('fnitz', bcrypt.genSaltSync(10)),
           created_at: new Date(),
           updated_at: new Date(),
           telefono: '55555555',
           celular: '1555555555',
           organismo_id: 2
-        },
-        {
-          id: 5,
-          nombre: 'Juan Manuel Roust',
-          email: 'jroust@cys.com.ar',
-          password: bcrypt.hashSync('jroust', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 2
-        }, {
-          id: 6,
-          nombre: 'Ana Corradi',
-          email: 'acorradi@cys.com.ar',
-          password: bcrypt.hashSync('acorradi', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 2
-        }
-        ], {})
+        }], {})
       }).then(function () {
         return queryInterface.bulkInsert('permiso', [{
           id: 1,

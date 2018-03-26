@@ -1,7 +1,7 @@
 # latest official node image
 FROM node:8.9.0
 
-MAINTAINER Leandro Ferrigno <lferrigno@cys.com.ar>
+MAINTAINER Nicolas Araya <naraya@cys.com.ar>
 
 # use nodemon for development
 # RUN npm config set proxy http://10.1.1.25:8080/

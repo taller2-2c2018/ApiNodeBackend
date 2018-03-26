@@ -23,7 +23,7 @@ const emailCierreInformeWithOptions = (receivers,informe) => {
   let mailOptions = {
     from: '"Informe JGM C&S" <informejgm.cys@gmail.com>', // sender address
     to: receivers.toString(), // list of receivers
-    bcc: 'Leandro Ferrigno <lferrigno@cys.com.ar>',
+    bcc: 'Nicolas Araya <naraya@cys.com.ar>',
     subject: 'INFORME ' + informe.id + ' - PLAZOS', // Subject line
     html: emailCierreInforme(informe)// html body
   }

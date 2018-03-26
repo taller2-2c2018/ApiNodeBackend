@@ -15,4 +15,4 @@ module.exports = {
         return queryInterface.sequelize.query('ALTER TABLE usuario DROP COLUMN celular;')
       })
   }
-}
+} 

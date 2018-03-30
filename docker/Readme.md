@@ -3,7 +3,7 @@
 El proyecto consta de las siguientes partes:
   - Backend Node.js
   - Frontend React.js 
-  - Base de datos mariadb/mysql
+  - Base de datos postgres
 
 
 Todas las partes son levantadas en conjunto utilizando docker-compose. A continuación se explica cómo se configuran.
@@ -23,7 +23,7 @@ services:
       - "3051:3001"
       - "9229:9229"
     volumes:
-      - ../node_back/parlamentapp:/usr/src
+      - ../node_back/apinode:/usr/src
     links:
      - mysql:database
   nodeFront:
@@ -33,7 +33,7 @@ services:
       - "3020:3000"
       - "9220:9229"
     volumes:
-      - ../node_front/parlamentapp:/usr/src
+      - ../node_front/apinode:/usr/src
   mysql:
     image: mysql:5.5
     container_name: mysql
@@ -54,9 +54,9 @@ Por ejemplo con esta configuración desde el backend una forma válida de conect
     "development": {
       "username": "root",
       "password": "root",
-      "database": "parlamentapp",
+      "database": "apinode",
       "host": "database",
-      "dialect": "mysql",
+      "dialect": "postgres",
       ...
     },
     ...

@@ -19,6 +19,6 @@ module.exports = {
     })
   },
   down: (queryInterface) => {
-    return queryInterface.dropTable('servers')
+    return queryInterface.dropTable('server')
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "parlamentapp",
+  "name": "apinode",
   "engines": {
     "node": ">=8"
   },

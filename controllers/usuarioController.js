@@ -17,7 +17,7 @@ const getOne = async function (req, res) {
 
 const create = async function (req, res) {
   let body = req.body
-  let usuario = await usuarioService.create(body.nombre, body.email, body.verificacion_email, body.password, body.verificacion_password, body.organismo_id, body.celular, body.telefono)
+  let usuario = await usuarioService.create(body.nombre, body.email, body.verificacion_email, body.password, body.verificacion_password, body.celular, body.telefono)
   res.statusCode = responser.codes.CREATED
   res.json(responser.createSuccessResponse(res.statusCode,usuario))
 }

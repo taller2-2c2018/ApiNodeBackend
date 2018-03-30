@@ -3,6 +3,29 @@ const fs = require('fs')
 const errorGetter = require('../util/errors')
 const asignarHash = require('../util/functions').asignarHash
 
+const validateParams = (params) => {
+  let errors = []
+  const necessaryParams = [ 'id',
+    '_rev',
+    'createdTime',
+    'updatedTime',
+    'size',
+    'filename',
+    'resource']
+  necessaryParams.forEach( param => {
+    if(!params.hasOwnProperty(param)){
+      errors.push(param)
+    }
+  })
+  return errors
+}
+
+const getFieldsFromParams = (params) => {
+  let fields = Object.keys(params)
+    .filter(item => item !== 'id')
+  return fields
+}
+
 module.exports = (models) => {
   return {
     list: () => {
@@ -46,6 +69,35 @@ module.exports = (models) => {
       })
       return promise
     },
+    upload: (file, params) => {
+      let promise = new Promise((resolve, reject) => {
+        let metadata = params.metadata
+        let errors = validateParams(metadata)
+        if(errors.length === 0){
+          let parameters = {
+            id: metadata.id,
+            filename: metadata.filename,
+            filename_original: file.originalname,
+            resource: metadata.resource,
+            updated_at: metadata.updatedTime,
+            created_at: metadata.createdTime,
+            size: metadata.size,
+            _rev: metadata._rev,
+            visible: true
+          }
+          models.FileApplicationUser.create(parameters)
+            .then((file) => {
+              resolve(file)
+            })
+            .catch((e) => {
+              reject(errorGetter.getServiceError(e.errors))
+            })
+        } else {
+          reject(errorGetter.getServiceErrorLostParams(errors))
+        }
+      })
+      return promise
+    },
     delete: (file_id) => {
       let promise = new Promise((resolve, reject) => {
         models.FileApplicationUser.findById(file_id)
@@ -85,6 +137,26 @@ module.exports = (models) => {
               reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))
             }
           })
+      })
+      return promise
+    },
+    update: (file_id, params) => {
+      let promise = new Promise((resolve, reject) => {
+        models.FileApplicationUser.findById(file_id, {}).then((file) => {
+          if (file !== null) {
+            let fields = getFieldsFromParams(params)
+            file.update(params, {
+              fields: fields
+            }).then((derivacion) => {
+              resolve(derivacion)
+            })
+              .catch((e) => {
+                return reject(errorGetter.getServiceError(e.errors))
+              })
+          } else {
+            reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))
+          }
+        })
       })
       return promise
     },

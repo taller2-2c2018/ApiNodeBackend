@@ -71,7 +71,6 @@ module.exports = function (sequelize) {
         unique: true
       }
     })
-    Usuario.belongsTo(models.Organismo)
   }
 
   Usuario.getMsgEmailsNoMatch = function () {

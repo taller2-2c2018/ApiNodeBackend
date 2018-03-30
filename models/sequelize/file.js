@@ -4,6 +4,11 @@ var Sequelize = require('sequelize')
 module.exports = function (sequelize) {
 
   const FileApplicationUser = sequelize.define('FileApplicationUser', {
+    pk: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
+    },
+    id: Sequelize.STRING,
     filename: Sequelize.STRING,
     filename_original: Sequelize.STRING,
     resource: Sequelize.STRING, // url absoluta
@@ -13,7 +18,13 @@ module.exports = function (sequelize) {
   }, {
     timestamps: true,
     underscored: true,
-    tableName: 'file'
+    tableName: 'file',
+    indexes: [
+      {
+        unique: false,
+        fields: ['pk']
+      }
+    ]
   })
 
   FileApplicationUser.getMsgInexistente = function(){

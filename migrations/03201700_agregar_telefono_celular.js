@@ -2,7 +2,6 @@ module.exports = {
 
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('usuario', 'telefono', Sequelize.STRING, {
-      after: 'organismo_id'
     }).then(function () {
       return queryInterface.addColumn('usuario', 'celular', Sequelize.STRING, {
         after: 'telefono'

@@ -47,6 +47,22 @@ const getServiceErrorBadRequest = (msg) =>{
   return err
 }
 
+const getServiceErrorLostParams = (params) =>{
+  var err = {}
+  let lostParms = ''
+  params.forEach(element => {
+    if(lostParms == ''){
+      lostParms += element
+    } else {
+      lostParms += ', ' + element
+    }
+  })
+  let msg = 'Incumplimiento de precondiciones ' + lostParms
+  err.msg = msg
+  err.status = 400
+  return err
+}
+
 exports.getUsuarioNoAutorizado = getUsuarioNoAutorizado
 exports.getTokenExpired = getTokenExpired
 exports.getServiceError = getServiceError
@@ -54,3 +70,4 @@ exports.getServiceErrorNotFound = getServiceErrorNotFound
 exports.getServiceErrorAlreadyExists = getServiceErrorAlreadyExists
 exports.getServiceErrorNotMatch = getServiceErrorNotMatch
 exports.getServiceErrorBadRequest = getServiceErrorBadRequest
+exports.getServiceErrorLostParams = getServiceErrorLostParams

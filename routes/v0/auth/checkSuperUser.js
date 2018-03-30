@@ -3,7 +3,7 @@ var errorGetter = require('../../../util/errors')
 const checkSuperUser = function () {
   return function (req, res, next) {
     try {
-      if( req.organismo_administrador ) {
+      if( req.administrador ) {
         next()
       } else {
         next(errorGetter.getUsuarioNoAutorizado())

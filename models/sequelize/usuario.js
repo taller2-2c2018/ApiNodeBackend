@@ -95,7 +95,7 @@ module.exports = function (sequelize) {
     return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{2,6}$/im
   }
 
-  Usuario.beforeCreate((user, options) => {
+  Usuario.beforeCreate((user) => {
     return bcrypt
       .hash(user.password, bcrypt.genSaltSync(10))
       .then(hashedPw => {
@@ -103,7 +103,7 @@ module.exports = function (sequelize) {
       })
   })
 
-  Usuario.beforeUpdate((user, options) => {
+  Usuario.beforeUpdate((user) => {
     return bcrypt
       .hash(user.password, bcrypt.genSaltSync(10))
       .then(hashedPw => {

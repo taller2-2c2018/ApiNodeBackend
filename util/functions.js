@@ -1,6 +1,7 @@
 'use strict'
 
 const errorGetter = require('./errors')
+const bcrypt = require('bcrypt')
 
 function syncForEach(array, callback) {
   let promise = new Promise((resolve, reject) => {
@@ -19,6 +20,12 @@ function syncForEach(array, callback) {
       })
   })
   return promise
+}
+
+function asignarHash(parametros,campo){
+  campo = campo || '_rev'
+  parametros[campo] = bcrypt.hashSync(JSON.stringify(parametros), bcrypt.genSaltSync(10))
+  return parametros
 }
 
 function doStep(array, fn, index, maxStep){
@@ -66,3 +73,4 @@ function secureAwaitSyncForEach(array, fn) {
 exports.syncForEach = syncForEach
 exports.awaitSyncForEach = awaitSyncForEach
 exports.secureAwaitSyncForEach = secureAwaitSyncForEach
+exports.asignarHash = asignarHash

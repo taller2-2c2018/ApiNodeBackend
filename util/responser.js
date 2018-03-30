@@ -10,6 +10,15 @@ const createSuccessResponse = (code, data) => {
   return {code, status: this.status.SUCCESS, message: '', data}
 }
 
+const createSuccessResponseWithMetadata = (code, data, name, version) => {
+  version = version || '0'
+  let response = { code, status: this.status.SUCCESS
+    , message: ''
+    , metadata: { total: data.length, version: version } }
+  response[name] = data
+  return response
+}
+
 const createSuccessResponseWithPagination = (code, data,pagination) => {
   return {code, status: this.status.SUCCESS, message: '', data,pagination}
 }
@@ -84,3 +93,4 @@ exports.status = status
 exports.createResponse = createResponse
 exports.createSuccessResponse = createSuccessResponse
 exports.createSuccessResponseWithPagination = createSuccessResponseWithPagination
+exports.createSuccessResponseWithMetadata = createSuccessResponseWithMetadata

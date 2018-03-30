@@ -3,7 +3,7 @@
       "username": "postgres",
       "password": "example",
       "database": "postgres",
-      "host": "172.18.0.3",
+      "host": "db",
       "dialect": "postgres",
       "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"

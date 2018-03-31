@@ -9,8 +9,6 @@ const usuarioService = require('../../services/usuarioService')(models)
 
 var idUsuarioCreado = 1
 var idRolCreado = 1
-var idOrganismoCreado = 1
-var otroOrganismoCreado = 1
 
 describe('Verificaciones sobre UsuarioService', function () {
   it('Obtener un usuario que no existe', function (done) {
@@ -20,65 +18,22 @@ describe('Verificaciones sobre UsuarioService', function () {
     })
   })
   it('Agregar un usuario', function (done) {
-    models.Organismo.create({
-      nombre: 'nombre organismo',
-      sigla: 'ORG'
-    }).then(function (organismo) {
-      idOrganismoCreado = organismo.id
-      let nombre = 'username!'
-      let email = 'mail@mail.com'
-      let verifEmail = 'mail@mail.com'
-      let psw = 'mySecretpass'
-      let verifPsw = 'mySecretpass'
-      usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado).then((usuario) => {
-        assert(usuario.id !== null, 'El usuario no existe')
-        idUsuarioCreado = usuario.id
-        assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
-        assert(usuario.email === email, 'El usuario no tiene bien el email')
-        done()
-      })
-    })
-  })
-  it('Modificar organismo usuario', function (done) {
-    models.Organismo.create({
-      nombre: 'otro nombre organismo',
-      sigla: 'ORG'
-    }).then(function (organismo) {
-      otroOrganismoCreado = organismo.id
-      let patch = {
-        'organismo_id': otroOrganismoCreado
-      }
-      usuarioService.update(idUsuarioCreado, patch).then((usuario) => {
-        assert(usuario.id === idUsuarioCreado, 'No encontro el usuario correcto')
-        assert(usuario.organismo_id === otroOrganismoCreado, 'El usuario no tiene bien el organismo')
-        done()
-      })
-    })
-  })
-  it('Agregar un usuario con organismo invalido ', function (done) {
     let nombre = 'username!'
-    let email = 'mailNUEVO@mail.com'
-    let verifEmail = 'mailNUEVO@mail.com'
+    let email = 'mail@mail.com'
+    let verifEmail = 'mail@mail.com'
     let psw = 'mySecretpass'
     let verifPsw = 'mySecretpass'
-    usuarioService.create(nombre, email, verifEmail, psw, verifPsw, 800)
-      .catch((e) => {
-        assert(e.status === 500, 'Deberia haber dado conflicto por orgnismo invalido y no lo dio')
-        done()
-      })
-  })
-  it('Modificar organismo usuario por uno inexistente', function (done) {
-    let patch = {
-      'organismo_id': -1
-    }
-    usuarioService.update(idUsuarioCreado, patch).catch((e) => {
-      assert(e.status === 500, 'Deberia haber dado conflicto por orgnismo invalido y no lo dio')
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw).then((usuario) => {
+      assert(usuario.id !== null, 'El usuario no existe')
+      idUsuarioCreado = usuario.id
+      assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
+      assert(usuario.email === email, 'El usuario no tiene bien el email')
       done()
     })
   })
   it('Modificar usuario inexistente', function (done) {
     let patch = {
-      'organismo_id': otroOrganismoCreado
+      'nombre': 'un nombre'
     }
     usuarioService.update(-1, patch).catch((e) => {
       assert(e.status === 404, 'Deberia haber dado conflicto porque no existe el usuario')
@@ -89,7 +44,6 @@ describe('Verificaciones sobre UsuarioService', function () {
     let nuevoNombre = 'Nuevo nombre largo'
     let nuevoEmail = 'new@new.com.ar'
     let patch = {
-      'organismo_id': idOrganismoCreado,
       password: 'nuevoPass',
       verificacion_password: 'nuevoPass',
       nombre: nuevoNombre,
@@ -98,7 +52,6 @@ describe('Verificaciones sobre UsuarioService', function () {
     }
     usuarioService.update(idUsuarioCreado, patch).then((usuario) => {
       assert(usuario.id === idUsuarioCreado, 'No encontro el usuario correcto')
-      assert(usuario.organismo_id === idOrganismoCreado, 'El usuario no tiene bien el organismo')
       assert(usuario.nombre === nuevoNombre, 'El usuario no tiene bien el nombre')
       assert(usuario.email !== nuevoEmail, 'El usuario no deberia cambiar su mail y cambio')
       done()
@@ -106,7 +59,6 @@ describe('Verificaciones sobre UsuarioService', function () {
   })
   it('Modificar usuario password mal 1', function (done) {
     let patch = {
-      'organismo_id': idOrganismoCreado,
       password: 'nuevoPass',
       verificacion_password: 'nuevoPassMal'
     }
@@ -117,7 +69,6 @@ describe('Verificaciones sobre UsuarioService', function () {
   })
   it('Modificar usuario password mal 2', function (done) {
     let patch = {
-      'organismo_id': idOrganismoCreado,
       password: 'nuevoPass'
     }
     usuarioService.update(idUsuarioCreado, patch).catch((e) => {
@@ -131,7 +82,7 @@ describe('Verificaciones sobre UsuarioService', function () {
     let verifEmail = 'mail@mail.com'
     let psw = 'mySecretpass'
     let verifPsw = 'mySecretpass'
-    usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado).catch((e) => {
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw).catch((e) => {
       assert(e.status === 500, 'Deberia haber dado conflicto por email repetido y no lo dio')
       done()
     })
@@ -142,7 +93,7 @@ describe('Verificaciones sobre UsuarioService', function () {
     let verifEmail = 'mail@mail.com' + 'errr'
     let psw = 'mySecretpass'
     let verifPsw = 'mySecretpass'
-    usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado).catch((e) => {
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw).catch((e) => {
       assert(e.status === 409, 'Deberia haber dado conflicto por email repetido y no lo dio')
       done()
     })
@@ -153,7 +104,7 @@ describe('Verificaciones sobre UsuarioService', function () {
     let verifEmail = 'mail@mail.com'
     let psw = 'mySecretpass'
     let verifPsw = 'mySecretpass' + 'errr'
-    usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado).catch((e) => {
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw).catch((e) => {
       assert(e.status === 409, 'Deberia haber dado conflicto por email repetido y no lo dio')
       done()
     })
@@ -227,48 +178,36 @@ describe('Verificaciones sobre UsuarioService', function () {
     })
   })
   it('Agregar un usuario con telefono y celular', function (done) {
-    models.Organismo.create({
-      nombre: 'nombre organismo',
-      sigla: 'ORG'
-    }).then(function (organismo) {
-      idOrganismoCreado = organismo.id
-      let nombre = 'username3!'
-      let email = 'mail3@mail.com'
-      let verifEmail = 'mail3@mail.com'
-      let psw = 'mySecretpass'
-      let verifPsw = 'mySecretpass'
-      let telefono = '46210911'
-      let celular = '1535634675'
-      usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado,telefono,celular).then((usuario) => {
-        assert(usuario.id !== null, 'El usuario no existe')
-        assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
-        assert(usuario.email === email, 'El usuario no tiene bien el email')
-        assert(usuario.telefono === telefono, 'El usuario no tiene bien el telefono')
-        assert(usuario.celular === celular, 'El usuario no tiene bien el celular')
-        done()
-      })
+    let nombre = 'username3!'
+    let email = 'mail3@mail.com'
+    let verifEmail = 'mail3@mail.com'
+    let psw = 'mySecretpass'
+    let verifPsw = 'mySecretpass'
+    let telefono = '46210911'
+    let celular = '1535634675'
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw,telefono,celular).then((usuario) => {
+      assert(usuario.id !== null, 'El usuario no existe')
+      assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
+      assert(usuario.email === email, 'El usuario no tiene bien el email')
+      assert(usuario.telefono === telefono, 'El usuario no tiene bien el telefono')
+      assert(usuario.celular === celular, 'El usuario no tiene bien el celular')
+      done()
     })
   })
   it('Agregar un usuario con telefono unicamente', function (done) {
-    models.Organismo.create({
-      nombre: 'nombre organismo',
-      sigla: 'ORG'
-    }).then(function (organismo) {
-      idOrganismoCreado = organismo.id
-      let nombre = 'username2!'
-      let email = 'mail2@mail.com'
-      let verifEmail = 'mail2@mail.com'
-      let psw = 'mySecretpass'
-      let verifPsw = 'mySecretpass'
-      let telefono = '46210911'
-      usuarioService.create(nombre, email, verifEmail, psw, verifPsw, idOrganismoCreado,telefono).then((usuario) => {
-        assert(usuario.id !== null, 'El usuario no existe')
-        idUsuarioCreado = usuario.id
-        assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
-        assert(usuario.email === email, 'El usuario no tiene bien el email')
-        assert(usuario.telefono === telefono, 'El usuario no tiene bien el telefono')
-        done()
-      })
+    let nombre = 'username2!'
+    let email = 'mail2@mail.com'
+    let verifEmail = 'mail2@mail.com'
+    let psw = 'mySecretpass'
+    let verifPsw = 'mySecretpass'
+    let telefono = '46210911'
+    usuarioService.create(nombre, email, verifEmail, psw, verifPsw,telefono).then((usuario) => {
+      assert(usuario.id !== null, 'El usuario no existe')
+      idUsuarioCreado = usuario.id
+      assert(usuario.nombre === nombre, 'El usuario no tiene bien el nombre')
+      assert(usuario.email === email, 'El usuario no tiene bien el email')
+      assert(usuario.telefono === telefono, 'El usuario no tiene bien el telefono')
+      done()
     })
   })
   it('Modificar telefono de usuario', function (done) {

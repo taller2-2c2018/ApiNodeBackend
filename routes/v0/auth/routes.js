@@ -5,17 +5,16 @@ const jwt = require('jwt-simple')
 const moment = require('moment')
 const responser = require('../../../util/responser')
 
-const ORGANISMO_JEFATURA_ID = 1
+const SERVER_ADMINISTRADOR_ID = 1
 
-let createToken = (id, username, permisos,nombrePila,nombreOrganismo,organismoId) => {
+let createToken = (id, username, permisos,nombrePila,application_user_id) => {
   let payload = {
     user_id: id,
     username: username,
     permisos: permisos,
     nombre:nombrePila,
-    nombre_organismo:nombreOrganismo,
-    organismo_id: organismoId,
-    organismo_administrador: (organismoId == ORGANISMO_JEFATURA_ID),
+    application_user_id: application_user_id,
+    administrador: (application_user_id == SERVER_ADMINISTRADOR_ID),
     iat: moment().unix(),
     exp: moment().add(30, 'days').unix()
   }
@@ -60,12 +59,7 @@ router.post('/', [
         model: models.Permiso,
         as: 'Permisos'
       }]
-    },
-    {
-      model: models.Organismo,
-      as: 'Organismo'
-    }
-    ]
+    }]
 
   }).then(usuario => {
     if (usuario === null) {
@@ -75,7 +69,7 @@ router.post('/', [
     }
     let permisos = usuario.obtenerPermisos()
     usuario.verificarPassword(password).then(() => {
-      var token = createToken(usuario.id, username, permisos,usuario.nombre,usuario.Organismo.nombre,usuario.Organismo.id)
+      var token = createToken(usuario.id, username, permisos,usuario.nombre,usuario.application_user_id)
       if (usuarios.indexOf(req.body.username) === -1) {
         usuarios.push(token)
       }
@@ -85,8 +79,8 @@ router.post('/', [
         username: username,
         permisos: permisos,
         nombre: usuario.nombre,
-        nombre_organismo: usuario.Organismo.nombre,
-        organismo_administrador: (usuario.Organismo.id == ORGANISMO_JEFATURA_ID),
+        application_user_id: usuario.application_user_id,
+        administrador: (usuario.application_user_id.id == SERVER_ADMINISTRADOR_ID),
       }))
     }).catch(function () {
       return res.status(responser.codes.UNPROCESSABLE_ENTITY).json(

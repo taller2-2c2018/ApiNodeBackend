@@ -17,10 +17,6 @@ const messageFaltaRol = () => {
   return 'Falta el rol'
 }
 
-const messageFaltaOrganismo = () => {  
-  return 'Falta el organismo'
-}
-
 const messageMailInvalido = () => {  
   return 'Debe ingresar un mail válido'
 }
@@ -35,7 +31,6 @@ module.exports = (models) => {
     messageFaltaPassword: messageFaltaPassword(),
     messageFaltaNombre: messageFaltaNombre(),
     messageFaltaRol: messageFaltaRol(),
-    messageFaltaOrganismo: messageFaltaOrganismo(),
     messageMailInvalido: messageMailInvalido(),
     messageNumeroInvalido: messageNumeroInvalido(),
     createValidations: [
@@ -72,9 +67,6 @@ module.exports = (models) => {
         .matches(models.Usuario.getTelefonoRegex())
         .withMessage(messageNumeroInvalido())
         .trim(),
-      check('organismo_id')
-        .exists()
-        .withMessage(messageFaltaOrganismo())
     ],
     updateValidation: [
       check('telefono')

@@ -19,7 +19,7 @@ router.get('/:usuario_id([0-9]+)', validarPermisoGetUsuario, withError(usuarioCo
 router.post('/', validarPermisoEditUsuario, usuarioValidations.createValidations, expressValidatorMiddleware,withError(usuarioController.v0.create))
 
 // Update un usuario. Solo hace update de lo que se le pasa { password,
-// verificacion_password, nombre, organismo_id} No cambia el mail
+// verificacion_password, nombre} No cambia el mail
 router.patch('/:usuario_id([0-9]+)', validarPermisoEditUsuario, usuarioValidations.updateValidation, expressValidatorMiddleware,withError(usuarioController.v0.update))
 
 // Agregar rol a usuario

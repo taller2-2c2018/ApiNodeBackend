@@ -13,10 +13,6 @@ const getSeachQueryFromParams = (queryParams) => {
     whereClause.nombre = {
       [Op.like]: '%' + queryParams.nombre + '%'
     }
-  if (queryParams.organismo_id) 
-    whereClause.organismo_id = {
-      [Op.eq]: queryParams.organismo_id
-    }
   return whereClause
 }
 
@@ -81,9 +77,6 @@ module.exports = (models) => {
                     as: 'Permisos'
                   }
                 ]
-              }, {
-                model: models.Organismo,
-                as: 'Organismo'
               }
             ]
           })
@@ -111,9 +104,6 @@ module.exports = (models) => {
                     as: 'Permisos'
                   }
                 ]
-              }, {
-                model: models.Organismo,
-                as: 'Organismo'
               }
             ]
           })
@@ -127,7 +117,7 @@ module.exports = (models) => {
       })
       return promise
     },
-    create: (nombre, email, verificacion_email, password, verificacion_password, organismo_id, telefono, celular) => {
+    create: (nombre, email, verificacion_email, password, verificacion_password, telefono, celular) => {
       let promise = new Promise((resolve, reject) => {
         if (email !== verificacion_email) 
           return reject(errorGetter.getServiceErrorNotMatch(models.Usuario.getMsgEmailsNoMatch(), email, verificacion_email))
@@ -139,7 +129,6 @@ module.exports = (models) => {
             nombre: nombre,
             email: email,
             password: password,
-            organismo_id: organismo_id,
             celular: celular,
             telefono: telefono
           })

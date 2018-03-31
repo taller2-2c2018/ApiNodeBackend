@@ -11,25 +11,24 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 let token = ''
-const camara = 'HSN'
 
-describe('GET /v0/api/informes', function() {
+describe('GET /v0/api/node', function() {
   before(function (done) {
-    inic.crearUsuarioInicial('Informes',['EDIT_INFORMES','GET_INFORMES']).then(function (tokenNuevo) {
+    inic.crearUsuarioInicial('node',['EDIT_node','GET_node']).then(function (tokenNuevo) {
       assert(tokenNuevo !== undefined, 'No se obtiene un token valido')
       token = tokenNuevo
       done()
     })   
   })
-  it('Tengo permisos para obtener los informes', function(done) {
+  it('Tengo permisos para obtener los node', function(done) {
     request(app)
-      .get('/v0/api/informes')
+      .get('/v0/api/node')
       .set({ 'Authorization': token, Accept: 'application/json' })
       .expect(200,done)
   })
 /*   it('Creo un nuevo informe de HSN', function(done) { 
     request(app)
-      .post('/v0/api/informes')
+      .post('/v0/api/node')º
       .set({ 'Authorization': token, Accept: 'application/json' })
       .send({camara: camara})
       .expect(200, function (err, res) {

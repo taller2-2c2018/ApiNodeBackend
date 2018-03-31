@@ -2,66 +2,48 @@
 var bcrypt = require('bcrypt')
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('organismo', [{
+  up: (queryInterface) => {
+    return queryInterface.bulkInsert('usuario', [{
       id: 1,
-      nombre: 'Jefatura de Gabinete',
-      sigla: 'JGM',
+      nombre: 'Nicolas Araya',
+      email: 'naraya@taller.com.ar',
+      password: bcrypt.hashSync('naraya', bcrypt.genSaltSync(10)),
       created_at: new Date(),
-      updated_at: new Date()
-    }, {
+      updated_at: new Date(),
+      telefono: '55555555',
+      celular: '1555555555',
+    },
+    {
       id: 2,
-      nombre: 'Secretaría legal y técnica',
-      sigla: 'SLyT',
+      nombre: 'Nicolas Ledesma',
+      email: 'nledesma@taller.com.ar',
+      password: bcrypt.hashSync('nledesma', bcrypt.genSaltSync(10)),
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
+      telefono: '55555555',
+      celular: '1555555555',
+    },
+    {
+      id: 3,
+      nombre: 'Fernando Cancellara',
+      email: 'fcancellara@taller.com.ar',
+      password: bcrypt.hashSync('fcancellara', bcrypt.genSaltSync(10)),
+      created_at: new Date(),
+      updated_at: new Date(),
+      telefono: '55555555',
+      celular: '1555555555',
+    },
+    {
+      id: 4,
+      nombre: 'FernandoNitz',
+      email: 'fnitz@cys.com.ar',
+      password: bcrypt.hashSync('fnitz', bcrypt.genSaltSync(10)),
+      created_at: new Date(),
+      updated_at: new Date(),
+      telefono: '55555555',
+      celular: '1555555555',
     }], {})
       .then(function () {
-        return queryInterface.bulkInsert('usuario', [{
-          id: 1,
-          nombre: 'Nicolas Araya',
-          email: 'naraya@taller.com.ar',
-          password: bcrypt.hashSync('naraya', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 1
-        },
-        {
-          id: 2,
-          nombre: 'Nicolas Ledesma',
-          email: 'nledesma@taller.com.ar',
-          password: bcrypt.hashSync('nledesma', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 1
-        },
-        {
-          id: 3,
-          nombre: 'Fernando Cancellara',
-          email: 'fcancellara@taller.com.ar',
-          password: bcrypt.hashSync('fcancellara', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 2
-        },
-        {
-          id: 4,
-          nombre: 'FernandoNitz',
-          email: 'fnitz@cys.com.ar',
-          password: bcrypt.hashSync('fnitz', bcrypt.genSaltSync(10)),
-          created_at: new Date(),
-          updated_at: new Date(),
-          telefono: '55555555',
-          celular: '1555555555',
-          organismo_id: 2
-        }], {})
-      }).then(function () {
         return queryInterface.bulkInsert('permiso', [{
           id: 1,
           nombre: 'GET_USUARIOS',
@@ -164,7 +146,7 @@ module.exports = {
       })
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: () => {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

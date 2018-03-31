@@ -3,15 +3,22 @@ const fs = require('fs')
 const errorGetter = require('../util/errors')
 const asignarHash = require('../util/functions').asignarHash
 
-const validateParams = (params) => {
+// const NECESSARY_PARAMS = ['createdTime',
+//   'updatedTime',
+//   'size',
+//   'filename',
+//   'resource']
+
+const NECESSARY_PARAMS_UPLOADS = ['id',
+  '_rev',
+  'createdTime',
+  'updatedTime',
+  'size',
+  'filename',
+  'resource']
+
+const validateParams = (params, necessaryParams) => {
   let errors = []
-  const necessaryParams = [ 'id',
-    '_rev',
-    'createdTime',
-    'updatedTime',
-    'size',
-    'filename',
-    'resource']
   necessaryParams.forEach( param => {
     if(!params.hasOwnProperty(param)){
       errors.push(param)
@@ -50,29 +57,29 @@ module.exports = (models) => {
       return promise
     },
     create: (file) => {
-      let promise = new Promise((resolve, reject) => {
-        let parameters = {
-          filename: file.filename,
-          filename_original: file.originalname,
-          resource: file.path,
-          size: file.size,
-          visible: true
+      let promise = new Promise(async (resolve, reject) => {
+        try{
+          let parameters = {
+            filename: file.filename,
+            filename_original: file.originalname,
+            resource: file.path,
+            size: file.size,
+            visible: true
+          }
+          parameters = asignarHash(parameters)
+          await models.FileApplicationUser.create(parameters)
+          await file.update({id: file.pk})
+          resolve(file)
+        } catch(e) { 
+          reject(errorGetter.getServiceError(e.errors))
         }
-        parameters = asignarHash(parameters)
-        models.FileApplicationUser.create(parameters)
-          .then((file) => {
-            resolve(file)
-          })
-          .catch((e) => {
-            reject(errorGetter.getServiceError(e.errors))
-          })
       })
       return promise
     },
     upload: (file, params) => {
       let promise = new Promise((resolve, reject) => {
         let metadata = params.metadata
-        let errors = validateParams(metadata)
+        let errors = validateParams(metadata,NECESSARY_PARAMS_UPLOADS)
         if(errors.length === 0){
           let parameters = {
             id: metadata.id,

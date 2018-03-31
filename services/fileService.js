@@ -67,9 +67,9 @@ module.exports = (models) => {
             visible: true
           }
           parameters = asignarHash(parameters)
-          await models.FileApplicationUser.create(parameters)
-          await file.update({id: file.pk})
-          resolve(file)
+          let newFile = await models.FileApplicationUser.create(parameters)
+          await newFile.update({id: newFile.pk})
+          resolve(newFile)
         } catch(e) { 
           reject(errorGetter.getServiceError(e.errors))
         }

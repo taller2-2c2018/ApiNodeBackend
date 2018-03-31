@@ -6,7 +6,8 @@ module.exports = function (sequelize) {
   const FileApplicationUser = sequelize.define('FileApplicationUser', {
     pk: {
       type: Sequelize.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true,
     },
     id: Sequelize.STRING,
     filename: Sequelize.STRING,
@@ -22,7 +23,7 @@ module.exports = function (sequelize) {
     indexes: [
       {
         unique: false,
-        fields: ['pk']
+        fields: ['id']
       }
     ]
   })

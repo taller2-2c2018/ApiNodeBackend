@@ -7,7 +7,7 @@ module.exports = {
         autoIncrement: true,
       },
       _rev: Sequelize.STRING,
-      application_owner: Sequelize.INTEGER,
+      application_owner: Sequelize.STRING,
       username: Sequelize.STRING, //Nombre del usuario en la aplicación
       // Timestamps
       created_at: Sequelize.DATE,

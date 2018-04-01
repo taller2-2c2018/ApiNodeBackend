@@ -37,14 +37,13 @@ module.exports = (models) => {
   return {
     list: () => {
       let promise = new Promise((resolve, reject) => {
-        models.FileApplicationUser.findAll({
+        models.Server.findAll({
           attributes: [ 'id', 
-            'filename',
-            'resource',
+            'name',
             '_rev',
-            'size',
             'created_at',
-            'updated_at'],
+            'created_by',
+            'last_connection'],
           order: [['id', 'ASC']],
         })
           .then((files) => {
@@ -56,20 +55,19 @@ module.exports = (models) => {
       })
       return promise
     },
-    create: (file) => {
+    create: (params) => {
       let promise = new Promise(async (resolve, reject) => {
         try{
           let parameters = {
-            filename: file.filename,
-            filename_original: file.originalname,
-            resource: file.path,
-            size: file.size,
-            visible: true
+            name: params.name,
+            last_connection: null,
           }
           parameters = asignarHash(parameters)
-          let newFile = await models.FileApplicationUser.create(parameters)
-          await newFile.update({id: newFile.pk})
-          resolve(newFile)
+          let newServer = await models.Server.create(parameters)
+          await newServer.update({
+            id: newServer.pk,
+          })
+          resolve(newServer)
         } catch(e) { 
           reject(errorGetter.getServiceError(e))
         }
@@ -105,63 +103,57 @@ module.exports = (models) => {
       })
       return promise
     },
-    delete: (file_id) => {
+    delete: (server_id) => {
       let promise = new Promise((resolve, reject) => {
-        models.FileApplicationUser.findById(file_id)
+        models.FileApplicationUser.findById(server_id)
           .then((file) => {
             if (file) {
-              let filename = file.filename
-              models.FileApplicationUser.destroy({
-                where: { id: file_id }
+              models.Server.destroy({
+                where: { id: server_id }
               }).then(() => {
-                try {
-                  fs.unlinkSync(__dirname + '/../uploads/' + filename)
-                  resolve('Baja correcta')
-                } catch (e) {
-                  reject(errorGetter.getServiceError(e))
-                }
+                resolve('Baja correcta')
               }).catch((e) => {
                 reject(errorGetter.getServiceError(e))
               })
             } else {
-              reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))
+              reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
             }
           })
       })
       return promise
     },
-    get: (file_id) => {
+    get: (server_id) => {
       let promise = new Promise((resolve, reject) => {
-        models.FileApplicationUser.findOne({
+        models.Server.findOne({
           where: {
-            id: file_id
+            id: server_id
           }
         })
-          .then((file) => {
-            if (file) {
-              resolve(file.filename)
+          .then((server) => {
+            if (server) {
+              resolve(server)
             } else {
-              reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))
+              reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
             }
           })
       })
       return promise
     },
-    update: (file_id, params) => {
+    update: (server_id, params) => {
       let promise = new Promise((resolve, reject) => {
-        models.FileApplicationUser.findById(file_id, {}).then((file) => {
-          if (file !== null) {
+        models.Server.findById(server_id, {}).then((server) => {
+          if (server !== null) {
             let fields = getFieldsFromParams(params)
-            file.update(params, {
+            server.update(params, {
               fields: fields
-            }).then((file) => {
-              resolve(file)
+            }).then((server) => {
+              resolve(server)
             })
               .catch((e) => {
                 return reject(errorGetter.getServiceError(e))
               })
           } else {
-            reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))
+            reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
           }
         })
       })

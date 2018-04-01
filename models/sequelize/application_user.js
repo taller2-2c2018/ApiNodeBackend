@@ -5,7 +5,7 @@ module.exports = function (sequelize) {
 
   const ApplicationUser = sequelize.define('ApplicationUser', {
     _rev: Sequelize.STRING,
-    application_owner: Sequelize.INTEGER,
+    application_owner: Sequelize.STRING,
     username: Sequelize.STRING, //Nombre del usuario en la aplicación
   }, {
     timestamps: true,

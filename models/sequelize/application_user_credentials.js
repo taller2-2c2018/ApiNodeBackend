@@ -13,9 +13,9 @@ module.exports = function (sequelize) {
     tableName: 'application_user_credentials'
   })
 
-  // ApplicationUserCredentials.associate = function (models) {
-  //   ApplicationUserCredentials.belongsTo(models.Usuario)
-  // }
+  ApplicationUserCredentials.associate = function (models) {
+    ApplicationUserCredentials.belongsTo(models.ApplicationUser)
+  }
 
   return ApplicationUserCredentials
 }

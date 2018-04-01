@@ -32,11 +32,11 @@ usuarios = []
 router.post('/', [
   check('username')
     .exists().withMessage('Falta el username')
-    .isEmail().withMessage('Falta el username')
-    .trim()
-    .normalizeEmail(),
+    .trim(),
   check('password')
-    .exists().withMessage('Falta el password')
+    .exists().withMessage('Falta el password'),
+  check('facebook_auth_token')
+    .exists().withMessage('Falta el token de facebook')
 ], (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -47,38 +47,25 @@ router.post('/', [
 
   let username = req.body.username
   let password = req.body.password
+  let facebook_auth_token = req.body.facebook_auth_token
 
-  models.Usuario.findOne({
+  models.ApplicationUser.findOne({
     where: {
-      email: username
+      username: username
     },
-    include: [{
-      model: models.Rol,
-      as: 'Roles',
-      include: [{
-        model: models.Permiso,
-        as: 'Permisos'
-      }]
-    }]
-
-  }).then(usuario => {
-    if (usuario === null) {
+  }).then(appUser => {
+    if (appUser === null) {
       return res.status(responser.codes.UNPROCESSABLE_ENTITY).json(
         responser.createResponse(responser.codes.UNPROCESSABLE_ENTITY,'Nombre de usuario o password incorrecto',null)
       )
     }
-    let permisos = usuario.obtenerPermisos()
-    usuario.verificarPassword(password).then(() => {
+    appUser.verificarUser(password,facebook_auth_token).then(() => {
       let exp = moment().add(30, 'days').unix()
-      var token = createToken(usuario.id, username, permisos,usuario.nombre,usuario.application_user_id,exp)
-      if (usuarios.indexOf(req.body.username) === -1) {
-        usuarios.push(token)
-      }
       res.statusCode = responser.codes.OK
       res.json(responser.createSuccessResponseWithMetadata(res.statusCode,{
         token: token,
         expires_at: exp,
-      }, 'token'))
+      }, 'user'))
     }).catch(function () {
       return res.status(responser.codes.UNPROCESSABLE_ENTITY).json(
         responser.createResponse(responser.codes.UNPROCESSABLE_ENTITY,'Nombre de usuario o password incorrecto',null)

@@ -1,26 +1,18 @@
 'use strict'
-const fs = require('fs')
 const errorGetter = require('../util/errors')
 const asignarHash = require('../util/functions').asignarHash
 
-// const NECESSARY_PARAMS = ['createdTime',
-//   'updatedTime',
-//   'size',
-//   'filename',
-//   'resource']
-
-const NECESSARY_PARAMS_UPLOADS = ['id',
+const NECESSARY_PARAMS = ['id',
   '_rev',
-  'createdTime',
-  'updatedTime',
-  'size',
-  'filename',
-  'resource']
+  'created_at',
+  'created_by',
+  'name',
+  'last_connection']
 
 const validateParams = (params, necessaryParams) => {
   let errors = []
-  necessaryParams.forEach( param => {
-    if(!params.hasOwnProperty(param)){
+  necessaryParams.forEach(param => {
+    if (params[param] === undefined) {
       errors.push(param)
     }
   })
@@ -38,16 +30,26 @@ module.exports = (models) => {
     list: () => {
       let promise = new Promise((resolve, reject) => {
         models.Server.findAll({
-          attributes: [ 'id', 
+          attributes: ['id',
             'name',
             '_rev',
             'created_at',
-            'created_by',
             'last_connection'],
           order: [['id', 'ASC']],
+          include: [{ model: models.Usuario }]
         })
-          .then((files) => {
-            resolve(files)
+          .then((servers) => {
+            let response = []
+            servers.forEach((server) => {
+              let serverResponse = {}
+              serverResponse.name = server.name
+              serverResponse.id = server.id
+              serverResponse._rev = server._rev
+              serverResponse.created_at = server.created_at
+              serverResponse.created_by = server.Usuario.email
+              response.push(serverResponse)
+            })
+            resolve(response)
           })
           .catch((e) => {
             reject(e)
@@ -57,18 +59,23 @@ module.exports = (models) => {
     },
     create: (params) => {
       let promise = new Promise(async (resolve, reject) => {
-        try{
-          let parameters = {
-            name: params.name,
-            last_connection: null,
+        try {
+          let errors = validateParams(params, NECESSARY_PARAMS)
+          if (errors.length === 0) {
+            let parameters = {
+              usuario_id: params.created_by,
+              name: params.name,
+            }
+            parameters = asignarHash(parameters)
+            let newServer = await models.Server.create(parameters)
+            await newServer.update({
+              id: newServer.pk,
+            })
+            resolve(newServer)
+          } else {
+            reject(errorGetter.getServiceErrorLostParams(errors))
           }
-          parameters = asignarHash(parameters)
-          let newServer = await models.Server.create(parameters)
-          await newServer.update({
-            id: newServer.pk,
-          })
-          resolve(newServer)
-        } catch(e) { 
+        } catch (e) {
           reject(errorGetter.getServiceError(e))
         }
       })
@@ -77,8 +84,8 @@ module.exports = (models) => {
     upload: (file, params) => {
       let promise = new Promise((resolve, reject) => {
         let metadata = params.metadata
-        let errors = validateParams(metadata,NECESSARY_PARAMS_UPLOADS)
-        if(errors.length === 0){
+        let errors = validateParams(metadata, NECESSARY_PARAMS)
+        if (errors.length === 0) {
           let parameters = {
             id: metadata.id,
             filename: metadata.filename,
@@ -104,21 +111,19 @@ module.exports = (models) => {
       return promise
     },
     delete: (server_id) => {
-      let promise = new Promise((resolve, reject) => {
-        models.FileApplicationUser.findById(server_id)
-          .then((file) => {
-            if (file) {
-              models.Server.destroy({
-                where: { id: server_id }
-              }).then(() => {
-                resolve('Baja correcta')
-              }).catch((e) => {
-                reject(errorGetter.getServiceError(e))
-              })
-            } else {
-              reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
-            }
+      let promise = new Promise(async (resolve, reject) => {
+        let server = await models.Server.findOne({ where: { id: server_id } })
+        if (server) {
+          models.Server.destroy({
+            where: { id: server_id }
+          }).then(() => {
+            resolve('Baja correcta')
+          }).catch((e) => {
+            reject(errorGetter.getServiceError(e))
           })
+        } else {
+          reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
+        }
       })
       return promise
     },
@@ -131,7 +136,14 @@ module.exports = (models) => {
         })
           .then((server) => {
             if (server) {
-              resolve(server)
+              let serverResponse = {}
+              serverResponse.name = server.name
+              serverResponse.id = server.id
+              serverResponse._rev = server._rev
+              serverResponse.created_at = server.created_at
+              serverResponse.created_by = server.usuario_id
+              serverResponse.last_connection = server.last_connection 
+              resolve(serverResponse)
             } else {
               reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
             }
@@ -144,14 +156,33 @@ module.exports = (models) => {
         models.Server.findById(server_id, {}).then((server) => {
           if (server !== null) {
             let fields = getFieldsFromParams(params)
-            server.update(params, {
-              fields: fields
-            }).then((server) => {
-              resolve(server)
-            })
-              .catch((e) => {
-                return reject(errorGetter.getServiceError(e))
-              })
+            let errors = validateParams(params, NECESSARY_PARAMS)
+            params.usuario_id = params.created_by 
+            if (errors.length === 0) {
+              if (server._rev == params._rev) {
+                //Reasgino el hash para poder volver a modificarlo
+                params = asignarHash(params)
+                server.update(params, {
+                  fields: fields
+                }).then((server) => {
+                  let serverResponse = {}
+                  serverResponse.name = server.name
+                  serverResponse.id = server.id
+                  serverResponse._rev = server._rev
+                  serverResponse.created_at = server.created_at
+                  serverResponse.created_by = server.usuario_id
+                  serverResponse.last_connection = server.last_connection 
+                  resolve(serverResponse)
+                })
+                  .catch((e) => {
+                    return reject(errorGetter.getServiceError(e))
+                  })
+              } else {
+                reject(errorGetter.getServiceErrorAlreadyModified())
+              }
+            } else {
+              reject(errorGetter.getServiceErrorLostParams(errors))
+            }
           } else {
             reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
           }

@@ -6,7 +6,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      id: Sequelize.STRING,
+      id: { 
+        type: Sequelize.STRING,
+        unique: true,
+      },
       filename: Sequelize.STRING,
       filename_original: Sequelize.STRING,
       resource: Sequelize.STRING, // url absoluta
@@ -16,7 +19,7 @@ module.exports = {
       // Timestamps
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
-      server_id: Sequelize.INTEGER,
+      server_id: Sequelize.STRING,
       application_user_id: Sequelize.INTEGER,
     }).then(function () {
       return queryInterface.sequelize.query('CREATE INDEX idx_file_id ON file (id);')

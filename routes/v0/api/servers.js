@@ -16,20 +16,20 @@ router.get('/', withError(serverController.v0.listServers))
 router.post('/', withError(serverController.v0.createServer))
 
 // Obtiene toda la información del servidor
-router.get('/:server_id([0-9]+)', withError(serverController.v0.getServer))
+router.get('/:server_id', withError(serverController.v0.getServer))
 
 // Modificación de los datos de un servidor. Se ignorarán los campos de id, createdBy, createdTime y lastConnection
 /* Parametros posibles:
   "_rev": "string",
   "name": "string",
 */
-router.put('/:server_id([0-9]+)', withError(serverController.v0.updateserver))
+router.put('/:server_id', withError(serverController.v0.updateserver))
 
 // Endpoint para resetear el token. Debe invalidar el anterior. 
-router.post('/:server_id([0-9]+)', withError(serverController.v0.resetToken))
+router.post('/:server_id', withError(serverController.v0.resetToken))
 
 // Endpoint para dar de baja un servidor
-router.delete('/:server_id([0-9]+)', withError(serverController.v0.deleteServer))
+router.delete('/:server_id', withError(serverController.v0.deleteServer))
 
 
 

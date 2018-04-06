@@ -32,10 +32,10 @@ router.post('/', upload.single('file'),/*checkDerivacionOwnership,validarPermiso
 router.post('/upload', upload.single('file'),/*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.uploadFile))
 
 // Elimina un file de un usuario
-router.delete('/:file_id([0-9]+)', /*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.deleteFile))
+router.delete('/:file_id', /*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.deleteFile))
 
 // Obtiene el file de un usuario 
-router.get('/:file_id([0-9]+)', withError(fileController.v0.getFile))
+router.get('/:file_id', withError(fileController.v0.getFile))
 
 // Modifica un file file de un usuario
 /* Parametros posibles:
@@ -47,6 +47,6 @@ router.get('/:file_id([0-9]+)', withError(fileController.v0.getFile))
   "filename": "string",
   "resource": "string"
 */
-router.put('/:file_id([0-9]+)', withError(fileController.v0.updateFile))
+router.put('/:file_id', withError(fileController.v0.updateFile))
 
 module.exports = router

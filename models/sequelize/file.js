@@ -9,7 +9,10 @@ module.exports = function (sequelize) {
       primaryKey: true,
       autoIncrement: true,
     },
-    id: Sequelize.STRING,
+    id: { 
+      type: Sequelize.STRING,
+      unique: true,
+    },
     filename: Sequelize.STRING,
     filename_original: Sequelize.STRING,
     resource: Sequelize.STRING, // url absoluta

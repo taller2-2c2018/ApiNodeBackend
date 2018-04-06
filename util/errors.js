@@ -33,6 +33,13 @@ const getServiceErrorAlreadyExists = (msg) =>{
   return err
 }
 
+const getServiceErrorAlreadyModified = () =>{
+  var err = {}
+  err.msg = 'Conflicto en el update'
+  err.status = 409
+  return err
+}
+
 const getServiceErrorNotMatch = (msg, value1, value2) =>{
   var err = {}
   err.msg = msg+': '+value1+' <> '+value2
@@ -71,3 +78,4 @@ exports.getServiceErrorAlreadyExists = getServiceErrorAlreadyExists
 exports.getServiceErrorNotMatch = getServiceErrorNotMatch
 exports.getServiceErrorBadRequest = getServiceErrorBadRequest
 exports.getServiceErrorLostParams = getServiceErrorLostParams
+exports.getServiceErrorAlreadyModified = getServiceErrorAlreadyModified

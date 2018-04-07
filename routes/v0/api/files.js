@@ -1,10 +1,6 @@
 const express = require('express')
 const router = express.Router()
-// const authMiddleware = require('../auth/middleware')
-// const checkDerivacionOwnership = require('../auth/checkDerivacionOwnership').checkDerivacionOwnership()
 const fileController = require('../../../controllers/fileController')
-// const models = require('../../../models/sequelize')
-// const derivacionValidations = require('../validations/derivacionValidation')(models)
 
 const multer = require('multer')
 var storage = multer.diskStorage({
@@ -18,21 +14,28 @@ var storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-// let validarPermisoGetFiles = authMiddleware.checkIsLoggedWithPermission('GET_FILE')
-// let validarPermisoEditFiles = authMiddleware.checkIsLoggedWithPermission('EDIT_FILE')
 const {withError} = require('./helpers')
 
 // Devuelve toda la información acerca de todos los archivos registrados por un application server 
 router.get('/', withError(fileController.v0.listFiles))
 
 // Crea un file de un usuario como admin
-router.post('/', upload.single('file'),/*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.createFile))
+/* Parametros posibles:
+  "id": "string",
+  "_rev": "string",
+  "created_at": 0,
+  "updated_at": 0,
+  "size": 0,
+  "filename": "string",
+  "resource": "string"
+*/
+router.post('/', upload.single('file'), withError(fileController.v0.createFile))
 
 // Crea un file de un usuario como aplicacion
-router.post('/upload', upload.single('file'),/*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.uploadFile))
+router.post('/upload', upload.single('file'), withError(fileController.v0.uploadFile))
 
 // Elimina un file de un usuario
-router.delete('/:file_id', /*checkDerivacionOwnership,validarPermisoEditFiles,*/ withError(fileController.v0.deleteFile))
+router.delete('/:file_id', withError(fileController.v0.deleteFile))
 
 // Obtiene el file de un usuario 
 router.get('/:file_id', withError(fileController.v0.getFile))
@@ -41,8 +44,8 @@ router.get('/:file_id', withError(fileController.v0.getFile))
 /* Parametros posibles:
   "id": "string",
   "_rev": "string",
-  "createdTime": date,
-  "updatedTime": date,
+  "created_at": date,
+  "updated_at": date,
   "size": "int",
   "filename": "string",
   "resource": "string"

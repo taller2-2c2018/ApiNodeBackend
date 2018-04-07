@@ -1,6 +1,8 @@
 'use strict'
 const errorGetter = require('../util/errors')
 const asignarHash = require('../util/functions').asignarHash
+const validateParams = require('../util/functions').validateParams
+const getFieldsFromParams = require('../util/functions').getFieldsFromParams
 
 const NECESSARY_PARAMS = ['id',
   '_rev',
@@ -8,22 +10,6 @@ const NECESSARY_PARAMS = ['id',
   'created_by',
   'name',
   'last_connection']
-
-const validateParams = (params, necessaryParams) => {
-  let errors = []
-  necessaryParams.forEach(param => {
-    if (params[param] === undefined) {
-      errors.push(param)
-    }
-  })
-  return errors
-}
-
-const getFieldsFromParams = (params) => {
-  let fields = Object.keys(params)
-    .filter(item => item !== 'pk')
-  return fields
-}
 
 module.exports = (models) => {
   return {

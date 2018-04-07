@@ -28,7 +28,7 @@ describe('GET /v0/api/node', function() {
   })
 /*   it('Creo un nuevo informe de HSN', function(done) { 
     request(app)
-      .post('/v0/api/node')º
+      .post('/v0/api/node')
       .set({ 'Authorization': token, Accept: 'application/json' })
       .send({camara: camara})
       .expect(200, function (err, res) {

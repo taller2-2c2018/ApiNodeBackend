@@ -37,7 +37,6 @@ module.exports = function (sequelize) {
 
   FileApplicationUser.associate = function (models) {
     FileApplicationUser.belongsTo(models.ApplicationUser)
-    FileApplicationUser.belongsTo(models.Server)
   }
 
   return FileApplicationUser

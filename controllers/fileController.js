@@ -9,7 +9,7 @@ const listFiles = async function (req, res) {
 }
 
 const createFile = async function (req, res) {
-  let response = await fileService.create(req.file)
+  let response = await fileService.create(req.file, req.body)
   res.statusCode = responser.codes.CREATED
   res.json(responser.createSuccessResponse(res.statusCode, response))
 }

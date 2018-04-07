@@ -70,7 +70,26 @@ function secureAwaitSyncForEach(array, fn) {
   return awaitSyncForEach(array, Math.ceil(array.length/5), fn)
 }
 
+
+const validateParams = (params, necessaryParams) => {
+  let errors = []
+  necessaryParams.forEach(param => {
+    if (params[param] === undefined) {
+      errors.push(param)
+    }
+  })
+  return errors
+}
+
+const getFieldsFromParams = (params) => {
+  let fields = Object.keys(params)
+    .filter(item => item !== 'pk' &&  item !== 'id')  
+  return fields
+}
+
 exports.syncForEach = syncForEach
 exports.awaitSyncForEach = awaitSyncForEach
 exports.secureAwaitSyncForEach = secureAwaitSyncForEach
 exports.asignarHash = asignarHash
+exports.validateParams = validateParams
+exports.getFieldsFromParams = getFieldsFromParams

@@ -43,13 +43,13 @@ module.exports = (models) => {
       })
       return promise
     },
-    create: (params) => {
+    create: (usuario_id, params) => {
       let promise = new Promise(async (resolve, reject) => {
         try {
           let errors = validateParams(params, NECESSARY_PARAMS)
           if (errors.length === 0) {
             let parameters = {
-              usuario_id: params.created_by,
+              usuario_id: usuario_id,
               name: params.name,
             }
             parameters = asignarHash(parameters)

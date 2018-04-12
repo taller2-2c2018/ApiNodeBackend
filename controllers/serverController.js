@@ -9,7 +9,7 @@ const listServers = async function (req, res) {
 }
 
 const createServer = async function (req, res) {
-  let response = await serverService.create(req.body)
+  let response = await serverService.create(req.user_id, req.body)
   res.statusCode = responser.codes.CREATED
   res.json(responser.createSuccessResponse(res.statusCode, response))
 }

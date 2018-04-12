@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const serverController = require('../../../controllers/serverController')
-
+const authMiddleware = require('../../../routes/v0/auth/middleware')
 const {withError} = require('./helpers')
 
+let validateLoggedUser = authMiddleware.checkIsLoggedWithPermission()
+
 // Devuelve toda la información acerca de todos los application servers indicados.
-router.get('/', withError(serverController.v0.listServers))
+router.get('/',validateLoggedUser ,withError(serverController.v0.listServers))
 
 // Endpoint para dar de alta un servidor. Se ignorarán los campos de id, _rev y lastConnection
 /* parametros:
@@ -13,7 +15,7 @@ router.get('/', withError(serverController.v0.listServers))
   "createdTime": 0,
   "name": "string",
 */
-router.post('/', withError(serverController.v0.createServer))
+router.post('/',validateLoggedUser, withError(serverController.v0.createServer))
 
 // Obtiene toda la información del servidor
 router.get('/:server_id', withError(serverController.v0.getServer))

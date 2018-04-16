@@ -1,7 +1,7 @@
 {
   "name": "apinode",
   "engines": {
-    "node": ">=8"
+    "node": "8.9.0"
   },
   "version": "0.0.0",
   "private": true,

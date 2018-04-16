@@ -9,7 +9,7 @@
     "start": "nodemon ./bin/www",
     "start-dock": "npm install && nodemon ./bin/www",
     "start-prod": "npm install --verbose  --global nodemon && npm install sequelize sequelize-cli pg &&  npm install && sequelize db:migrate:undo:all --env=production && sequelize db:migrate --env=production && sequelize db:seed:all --env=production && nodemon ./bin/www",
-    "start-prod-heroku": "npm install sequelize sequelize-cli pg &&  npm install && sequelize db:migrate:undo:all --env=production && sequelize db:migrate --env=production && sequelize db:seed:all --env=production && node --env=production ./bin/www",
+    "start-prod-heroku": "npm install sequelize sequelize-cli pg &&  npm install && sequelize db:migrate:undo:all --env=production && sequelize db:migrate --env=production && sequelize db:seed:all --env=production && node ./bin/www",
     "debug": "PORT=3001 node --inspect=0.0.0.0:9229 ./bin/www",
     "tests": "sequelize db:migrate:undo:all --env=test && sequelize db:migrate --env=test && sequelize db:seed:all --seeders-path=/usr/src/tests/seeders/  --env=test && NODE_ENV=test node_modules/.bin/mocha tests/* --recursive --exit ",
     "nyc_tests": "sequelize db:migrate:undo:all --env=test && sequelize db:migrate --env=test  && sequelize db:seed:all --seeders-path=/usr/src/tests/seeders/  --env=test && NODE_ENV=test node_modules/.bin/nyc node_modules/.bin/mocha tests/* --recursive --exit ",

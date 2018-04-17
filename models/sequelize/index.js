@@ -13,12 +13,15 @@ const config    = {
 
 // const handleConnectionError = function(){
 // }
-
 let sequelize
 if (config.use_env_variable) {
   sequelize= new Sequelize(process.env[config.use_env_variable])
 } else {
-  sequelize = new Sequelize(process.env.DB_CONNECTION, config)
+  if (process.env.PRODUCTION_HEROKU){
+    sequelize = new Sequelize(process.env.DB_CONNECTION_PROD, config)
+  } else {
+    sequelize = new Sequelize(process.env.DB_CONNECTION, config)
+  }
 }
 
 

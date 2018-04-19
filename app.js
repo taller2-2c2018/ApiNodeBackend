@@ -14,7 +14,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-if (process.env.PRODUCTION_HEROKU){
+if (process.env.PRODUCTION_LOG){
   const fs = require('fs')
   const path = require('path')
   // create a write stream (in append mode)

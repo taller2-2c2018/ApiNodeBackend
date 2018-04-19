@@ -14,9 +14,17 @@ app.use(function (req, res, next) {
   next()
 })
 
-// view engine setup uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-app.use(logger('dev'))
+if (process.env.PRODUCTION_HEROKU){
+  const fs = require('fs')
+  const path = require('path')
+  // create a write stream (in append mode)
+  let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
+  // setup the logger
+  app.use(logger('combined', {stream: accessLogStream}))
+} else {
+  app.use(logger('dev'))
+}
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 

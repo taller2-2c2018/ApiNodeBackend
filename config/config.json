@@ -9,9 +9,9 @@
       "TOKEN_SECRET": "mySecret"
     },
     "test": {
-      "username": "root",
-      "password": null,
-      "database": "apinodetest",
+      "username": "postgres",
+      "password": "example",
+      "database": "postgres_test",
       "host": "localhost",
       "dialect": "postgres",
       "operatorsAliases": false,

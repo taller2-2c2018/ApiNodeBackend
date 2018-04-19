@@ -1,3 +1,5 @@
 .vscode/
 .eslintrc.json
 !.gitignore
+access.log
+

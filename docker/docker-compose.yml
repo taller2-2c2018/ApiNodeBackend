@@ -14,14 +14,14 @@ services:
      - db:database
   db:
     container_name: postgres
-    image: postgres
+    image: postgres8.4.1
     restart: always
 #    ports:
 #     - "3052:5432"
     environment:
       POSTGRES_PASSWORD: example
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-    - 8080:8080
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #   - 8080:8080

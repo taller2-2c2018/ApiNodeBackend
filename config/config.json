@@ -12,7 +12,7 @@
       "username": "postgres",
       "password": "example",
       "database": "postgres_test",
-      "host": "localhost",
+      "host": "db",
       "dialect": "postgres",
       "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"

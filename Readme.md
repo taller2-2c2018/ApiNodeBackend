@@ -27,20 +27,12 @@ Ambos deben contar con el siguiente formato
 ```sh
 TOKEN_SECRET=<valor>
 DB_CONNECTION=<connection_string>
-SEND_MAIL=0|1
-MAIL_USR=<string> 
-MAIL_PWD=<string>
-MAIL_SERVICE=<string>
 URL_FRONT=<url>
 ```
 Por ejemplo
 ```sh
 TOKEN_SECRET="mySecret"
 DB_CONNECTION=mysql://root:root@database:3306/parlamentapp
-SEND_MAIL=1
-MAIL_USR=informejgm.cys@gmail.com
-MAIL_PWD=jefatura18
-MAIL_SERVICE=gmail
 URL_FRONT=http://localhost:3020
 ```
 

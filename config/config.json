@@ -25,6 +25,15 @@
       "dialect": "postgres",
       "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"
+    },
+    "test_production": {
+      "username": "d8upr5eka6g9e0",
+      "password": "4a93a778fb3498ae89addb6c82fed5d13bae3747a730c6b47cd0476da7f8ed8a",
+      "database": "d8upr5eka6g9e0",
+      "host": "ec2-54-243-213-188.compute-1.amazonaws.com",
+      "dialect": "postgres",
+      "operatorsAliases": false,
+      "TOKEN_SECRET": "mySecret"
     }
   }
   

@@ -14,7 +14,7 @@ services:
      - db:database
   db:
     container_name: postgres
-    image: postgres8.4.1
+    image: postgres
     restart: always
 #    ports:
 #     - "3052:5432"

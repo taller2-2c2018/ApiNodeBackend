@@ -117,11 +117,12 @@ module.exports = (models) => {
       let promise = new Promise((resolve, reject) => {
         models.Server.findOne({
           where: {
-            id: server_id
+            id: server_id.toString()
           }
         })
           .then((server) => {
             if (server) {
+              server = server.dataValues
               let serverResponse = {}
               serverResponse.name = server.name
               serverResponse.id = server.id

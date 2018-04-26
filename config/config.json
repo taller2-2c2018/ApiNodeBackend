@@ -33,6 +33,7 @@
       "host": "ec2-54-243-213-188.compute-1.amazonaws.com",
       "dialect": "postgres",
       "operatorsAliases": false,
+      "ssl": true,
       "TOKEN_SECRET": "mySecret"
     }
   }

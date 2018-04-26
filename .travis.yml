@@ -3,4 +3,4 @@ node_js:
   - "8.9.0"
 before_script:
   - psql -c "CREATE DATABASE database_travis;" -U postgres
-  - psql -c "CREATE USER postgres WITH PASSWORD 'example';" -U postgres
+  - psql -c "CREATE USER naraya WITH PASSWORD 'example';" -U postgres

@@ -34,6 +34,11 @@
       "dialect": "postgres",
       "operatorsAliases": false,
       "ssl": true,
+      "dialectOptions":{
+        "ssl":{
+           "require":true
+        }
+      },
       "TOKEN_SECRET": "mySecret"
     }
   }

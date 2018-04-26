@@ -6,7 +6,6 @@ const assert = require('chai').assert
 let app = require('../../../../app')
 const request = require('supertest')
 var bodyParser = require('body-parser')
-const inic = require('../bootstrapping')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 

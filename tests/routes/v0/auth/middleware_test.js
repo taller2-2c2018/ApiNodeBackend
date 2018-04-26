@@ -1,4 +1,8 @@
-require('dotenv').config({path: '.env.test'})
+if (process.env.TEST_HEROKU){
+  require('dotenv').config({path: '.env.test_heroku'})
+} else {
+  require('dotenv').config({path: '.env.test'})
+}
 let chai = require('chai')
 let authMiddleware = require('../../../../routes/v0/auth/middleware')
 let moment = require('moment')

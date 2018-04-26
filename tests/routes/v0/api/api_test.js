@@ -1,4 +1,8 @@
-require('dotenv').config({path: '.env.test'})
+if (process.env.TEST_HEROKU){
+  require('dotenv').config({path: '.env.test_heroku'})
+} else {
+  require('dotenv').config({path: '.env.test'})
+}
 let describe = require('mocha').describe
 let it = require('mocha').it
 let before = require('mocha').before

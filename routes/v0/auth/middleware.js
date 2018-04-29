@@ -17,7 +17,7 @@ var checkIsLoggedWithPermission = function (askedPermmision) {
         req.permisos = payload.permisos
         req.username = payload.username
         req.user_id = payload.user_id
-        req.application_user_id = payload.application_user_id
+        req.server_id = payload.server_id
         req.administrador = payload.administrador
         next()
       } catch (e) {

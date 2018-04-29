@@ -7,14 +7,14 @@ const responser = require('../../../util/responser')
 
 const SERVER_ADMINISTRADOR_ID = 1
 
-let createToken = (id, username, permisos,nombrePila,application_user_id, exp) => {
+let createToken = (id, username, permisos,nombrePila,server_id, exp) => {
   let payload = {
     user_id: id,
     username: username,
     permisos: permisos,
     nombre:nombrePila,
-    application_user_id: application_user_id,
-    administrador: (application_user_id == SERVER_ADMINISTRADOR_ID),
+    server_id: server_id,
+    administrador: (server_id == SERVER_ADMINISTRADOR_ID),
     iat: moment().unix(),
     exp: exp
   }
@@ -70,7 +70,7 @@ router.post('/', [
     let permisos = usuario.obtenerPermisos()
     usuario.verificarPassword(password).then(() => {
       let exp = moment().add(30, 'days').unix()
-      var token = createToken(usuario.id, username, permisos,usuario.nombre,usuario.application_user_id,exp)
+      var token = createToken(usuario.id, username, permisos,usuario.nombre,usuario.server_id,exp)
       if (usuarios.indexOf(req.body.username) === -1) {
         usuarios.push(token)
       }

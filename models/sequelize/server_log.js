@@ -12,7 +12,10 @@ module.exports = function (sequelize) {
   })
 
   ServerLog.associate = function (models) {
-    ServerLog.belongsTo(models.Server)
+    ServerLog.belongsTo(models.Server, {
+      foreignKey: 'server_id',
+      targetKey: 'id'
+    })
   }
 
   return ServerLog

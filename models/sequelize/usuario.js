@@ -71,7 +71,10 @@ module.exports = function (sequelize) {
         unique: true
       }
     })
-    Usuario.belongsTo(models.Server)
+    Usuario.belongsTo(models.Server, {
+      foreignKey: 'server_id',
+      targetKey: 'id'
+    })
   }
 
   Usuario.getMsgEmailsNoMatch = function () {

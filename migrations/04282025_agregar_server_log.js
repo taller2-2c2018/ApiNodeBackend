@@ -12,7 +12,7 @@ module.exports = {
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     }).then(function () {
-      return queryInterface.sequelize.query('ALTER TABLE server_log ADD CONSTRAINT server_log_user_id_fk FOREIGN KEY (server_id) REFERENCES server (id) MATCH SIMPLE;')
+      return queryInterface.sequelize.query('ALTER TABLE server_log ADD CONSTRAINT server_log_server_id_fk FOREIGN KEY (server_id) REFERENCES server (id) MATCH SIMPLE;')
     })
   },
   down: (queryInterface) => {

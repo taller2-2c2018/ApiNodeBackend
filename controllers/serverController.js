@@ -38,9 +38,6 @@ const deleteServer = async function (req, res) {
   res.json(responser.createSuccessResponse(res.statusCode, response))
 }
 
-
-
-
 module.exports = {
   v0: {
     listServers: listServers,

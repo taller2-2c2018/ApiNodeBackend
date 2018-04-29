@@ -117,7 +117,7 @@ module.exports = (models) => {
       })
       return promise
     },
-    create: (nombre, email, verificacion_email, password, verificacion_password, telefono, celular) => {
+    create: (nombre, email, verificacion_email, password, verificacion_password, telefono, celular, server_id) => {
       let promise = new Promise((resolve, reject) => {
         if (email !== verificacion_email) 
           return reject(errorGetter.getServiceErrorNotMatch(models.Usuario.getMsgEmailsNoMatch(), email, verificacion_email))
@@ -130,7 +130,8 @@ module.exports = (models) => {
             email: email,
             password: password,
             celular: celular,
-            telefono: telefono
+            telefono: telefono,
+            server_id: server_id
           })
           .then((usuario) => {
             resolve(usuario)

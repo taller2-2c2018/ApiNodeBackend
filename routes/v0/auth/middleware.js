@@ -1,9 +1,9 @@
-var jwt = require('jwt-simple')
-var moment = require('moment')
-var env = process.env.NODE_ENV || 'development'
-var errorGetter = require('../../../util/errors')
+const jwt = require('jwt-simple')
+const moment = require('moment')
+const errorGetter = require('../../../util/errors')
+const models = require('../../../models/sequelize')
 
-var checkIsLoggedWithPermission = function (askedPermmision) {
+const checkIsLoggedWithPermission = function (askedPermmision) {
   return function (req, res, next) {
     if (req.headers && req.headers.authorization) {
       try {
@@ -29,5 +29,18 @@ var checkIsLoggedWithPermission = function (askedPermmision) {
   }
 }
 
+// const logServerAcces = function (user_id,server_id) {
+//   return new Promise((resolve, reject) => {
+//     if(user_id && server_id){
+//       models.ServerLog.create({
+//         user_id: user_id,
+//         server_id: server_id,
+//       })
+//     } else {
+//       resolve()
+//     }
+//   })
+// }
+// exports.logServerAcces = logServerAcces 
 
 exports.checkIsLoggedWithPermission = checkIsLoggedWithPermission

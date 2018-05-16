@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const fileController = require('../../../controllers/fileController')
-
+const authMiddleware = require('../../../routes/v0/auth/middleware')
 const multer = require('multer')
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,8 +16,10 @@ const upload = multer({ storage: storage })
 
 const {withError} = require('./helpers')
 
+let validateLoggedUser = authMiddleware.checkIsLoggedWithPermission()
+
 // Devuelve toda la información acerca de todos los archivos registrados por un application server 
-router.get('/', withError(fileController.v0.listFiles))
+router.get('/', validateLoggedUser, withError(fileController.v0.listFiles))
 
 // Crea un file de un usuario como admin
 /* Parametros posibles:
@@ -29,13 +31,13 @@ router.get('/', withError(fileController.v0.listFiles))
   "filename": "string",
   "resource": "string"
 */
-router.post('/', upload.single('file'), withError(fileController.v0.createFile))
+router.post('/', validateLoggedUser, upload.single('file'), withError(fileController.v0.createFile))
 
 // Crea un file de un usuario como aplicacion
-router.post('/upload', upload.single('file'), withError(fileController.v0.uploadFile))
+router.post('/upload', validateLoggedUser, upload.single('file'), withError(fileController.v0.uploadFile))
 
 // Elimina un file de un usuario
-router.delete('/:file_id', withError(fileController.v0.deleteFile))
+router.delete('/:file_id', validateLoggedUser, withError(fileController.v0.deleteFile))
 
 // Obtiene el file de un usuario 
 router.get('/:file_id', withError(fileController.v0.getFile))

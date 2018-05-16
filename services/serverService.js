@@ -33,6 +33,7 @@ module.exports = (models) => {
               serverResponse._rev = server._rev
               serverResponse.created_at = server.created_at
               serverResponse.created_by = server.Usuario.email
+              serverResponse.url = server.url
               response.push(serverResponse)
             })
             resolve(response)
@@ -51,6 +52,7 @@ module.exports = (models) => {
             let parameters = {
               usuario_id: usuario_id,
               name: params.name,
+              url: params.url,
             }
             parameters = asignarHash(parameters)
             let newServer = await models.Server.create(parameters)
@@ -129,7 +131,8 @@ module.exports = (models) => {
               serverResponse._rev = server._rev
               serverResponse.created_at = server.created_at
               serverResponse.created_by = server.usuario_id
-              serverResponse.last_connection = server.last_connection 
+              serverResponse.last_connection = server.last_connection
+              serverResponse.url = server.url
               resolve(serverResponse)
             } else {
               reject(errorGetter.getServiceErrorNotFound(models.Server.getMsgInexistente()))
@@ -150,7 +153,7 @@ module.exports = (models) => {
                 //Reasgino el hash para poder volver a modificarlo
                 params = asignarHash(params)
                 server.update(params, {
-                  fields: fields
+                  fields:  fields
                 }).then((server) => {
                   let serverResponse = {}
                   serverResponse.name = server.name
@@ -159,6 +162,7 @@ module.exports = (models) => {
                   serverResponse.created_at = server.created_at
                   serverResponse.created_by = server.usuario_id
                   serverResponse.last_connection = server.last_connection 
+                  serverResponse.url = server.url
                   resolve(serverResponse)
                 })
                   .catch((e) => {

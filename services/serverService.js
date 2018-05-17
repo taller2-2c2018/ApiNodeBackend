@@ -19,6 +19,7 @@ module.exports = (models) => {
           attributes: ['id',
             'name',
             '_rev',
+            'url',
             'created_at',
             'last_connection'],
           order: [['id', 'ASC']],
@@ -32,7 +33,7 @@ module.exports = (models) => {
               serverResponse.id = server.id
               serverResponse._rev = server._rev
               serverResponse.created_at = server.created_at
-              serverResponse.created_by = server.Usuario.email
+              serverResponse.created_by = server.usuario_id 
               serverResponse.url = server.url
               response.push(serverResponse)
             })

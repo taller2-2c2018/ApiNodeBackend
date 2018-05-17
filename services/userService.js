@@ -30,8 +30,9 @@ module.exports = (models) => {
     create: (server_id, params) => {
       let promise = new Promise(async (resolve, reject) => {
         try {
+          console.log(server_id + 'Esto se asigno')
           let parameters = {
-            server_id: server_id,
+            server_id: '1',
             username: params.username,
             password: params.password,
             facebook_auth_token: params.facebook_auth_token

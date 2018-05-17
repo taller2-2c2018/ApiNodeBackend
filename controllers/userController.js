@@ -3,7 +3,7 @@ const userService = require('../services/userService')(models)
 const responser = require('../util/responser')
 
 const listUsers = async function (req, res) {
-  let users = await userService.list(req.server_id,)
+  let users = await userService.list(req.server_id)
   res.statusCode = responser.codes.OK
   res.json(responser.createSuccessResponseWithMetadataCollection(res.statusCode, users, 'Users'))
 }

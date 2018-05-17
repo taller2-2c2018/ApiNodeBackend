@@ -15,7 +15,10 @@ module.exports = function (sequelize) {
   })
 
   ApplicationUser.associate = function (models) {
-    ApplicationUser.belongsTo(models.Server)
+    ApplicationUser.belongsTo(models.Server, {
+      foreignKey: 'server_id',
+      targetKey: 'id'
+    })
   }
 
   return ApplicationUser

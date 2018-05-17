@@ -18,6 +18,7 @@ module.exports = (models) => {
         models.Server.findAll({
           attributes: ['id',
             'name',
+            'usuario_id',
             '_rev',
             'url',
             'created_at',
@@ -33,7 +34,7 @@ module.exports = (models) => {
               serverResponse.id = server.id
               serverResponse._rev = server._rev
               serverResponse.created_at = server.created_at
-              serverResponse.created_by = server.usuario_id 
+              serverResponse.created_by = (server.usuario_id)?server.Usuario.email:'default' 
               serverResponse.url = server.url
               response.push(serverResponse)
             })
@@ -161,7 +162,7 @@ module.exports = (models) => {
                   serverResponse.id = server.id
                   serverResponse._rev = server._rev
                   serverResponse.created_at = server.created_at
-                  serverResponse.created_by = server.usuario_id
+                  serverResponse.created_by = (server.usuario_id)?server.Usuario.email:'default'
                   serverResponse.last_connection = server.last_connection 
                   serverResponse.url = server.url
                   resolve(serverResponse)

@@ -18,10 +18,10 @@
       "TOKEN_SECRET": "mySecret"
     },
     "production": {
-      "username": "dxnmdqzmanqody",
-      "password": "9d8e207d67935ec87e9a93e33dd41f6f839166055b9e45539707608bb54548cf",
-      "database": "da2gncoalv8ruq",
-      "host": "ec2-54-243-210-70.compute-1.amazonaws.com",
+      "username": "odvzpsykavggrf",
+      "password": "681fef59de202386276a128af674fba8a8e912031c14dbf615aba6d6d7743cba",
+      "database": "d4c0apjb700buk",
+      "host": "ec2-54-243-137-182.compute-1.amazonaws.com",
       "dialect": "postgres",
       "operatorsAliases": false,
       "TOKEN_SECRET": "mySecret"

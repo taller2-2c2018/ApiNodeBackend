@@ -18,21 +18,28 @@
     "TOKEN_SECRET": "mySecret"
   },
   "production": {
-    "username": "dxnmdqzmanqody",
-    "password": "9d8e207d67935ec87e9a93e33dd41f6f839166055b9e45539707608bb54548cf",
-    "database": "da2gncoalv8ruq",
-    "host": "ec2-54-243-210-70.compute-1.amazonaws.com",
+    "username": "odvzpsykavggrf",
+    "password": "681fef59de202386276a128af674fba8a8e912031c14dbf615aba6d6d7743cba",
+    "database": "d4c0apjb700buk",
+    "host": "ec2-54-243-137-182.compute-1.amazonaws.com",
     "dialect": "postgres",
     "operatorsAliases": false,
     "TOKEN_SECRET": "mySecret"
   },
   "test_production": {
-    "username": "d8upr5eka6g9e0",
-    "password": "4a93a778fb3498ae89addb6c82fed5d13bae3747a730c6b47cd0476da7f8ed8a",
-    "database": "d8upr5eka6g9e0",
-    "host": "ec2-54-243-213-188.compute-1.amazonaws.com",
+    "username": "naraya",
+    "password": "example",
+    "database": "database_travis",
+    "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": false,
+    "ssl": true,
+    "dialectOptions":{
+      "ssl":{
+         "require":true
+      }
+    },
     "TOKEN_SECRET": "mySecret"
   }
 }
+

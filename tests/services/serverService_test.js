@@ -13,7 +13,6 @@ const serverService = require('../../services/serverService')(models)
 
 let idServerCreado
 let revViejo
-let originalname = 'originalname'
 let idUsuarioCreado
 let serverName
 
@@ -59,7 +58,6 @@ describe('Verificaciones sobre serverService', function () {
   })
   it('Obtener un server', function (done) {
     serverService.get(idServerCreado.toString()).then((server) => {
-      console.log(server.name)
       assert(server.name == serverName, 'El server no tiene bien el servername')
       done()
     })
@@ -70,7 +68,7 @@ describe('Verificaciones sobre serverService', function () {
       id: idServerCreado,
       _rev: revViejo,
       created_at: null,
-      created_by: null,
+      created_by: idUsuarioCreado,
       last_connection: new Date(),
       name: servername2,
     }

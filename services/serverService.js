@@ -145,7 +145,7 @@ module.exports = (models) => {
     },
     update: (server_id, params) => {
       let promise = new Promise((resolve, reject) => {
-        models.Server.findById(server_id, {}).then((server) => {
+        models.Server.findById(server_id, { include: [{ model: models.Usuario }] }).then((server) => {
           if (server !== null) {
             let fields = getFieldsFromParams(params)
             let errors = validateParams(params, NECESSARY_PARAMS)

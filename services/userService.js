@@ -30,12 +30,14 @@ module.exports = (models) => {
     create: (server_id, params) => {
       let promise = new Promise(async (resolve, reject) => {
         try {
-          console.log(server_id + 'Esto se asigno')
           let parameters = {
-            server_id: '1',
+            server_id: server_id,
             username: params.username,
             password: params.password,
-            facebook_auth_token: params.facebook_auth_token
+            facebook_auth_token: params.facebook_auth_token,
+            nombre: params.nombre,
+            apellido: params.apellido,
+            fecha_nacimiento: params.fecha_nacimiento,
           }
           parameters = asignarHash(parameters)
           let newApplicationUser = await models.ApplicationUser.create(parameters)

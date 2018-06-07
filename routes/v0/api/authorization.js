@@ -6,7 +6,7 @@ const {withError} = require('./helpers')
 
 let validateLoggedUser = authMiddleware.checkIsLoggedWithPermission()
 
-// Endpoint para dar de alta toekn para un usuario
+// Endpoint para dar de alta token para un usuario, ademas trae otros datos del usuario
 /* parametros:
   "application_user_id": "string"
 */

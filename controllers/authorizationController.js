@@ -11,6 +11,6 @@ const createToken = async function (req, res) {
 
 module.exports = {
   v0: {
-    createServer: createToken,
+    createToken: createToken,
   }
 }

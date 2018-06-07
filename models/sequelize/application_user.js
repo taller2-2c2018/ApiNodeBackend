@@ -8,6 +8,9 @@ module.exports = function (sequelize) {
     username: Sequelize.STRING,
     password: Sequelize.STRING,
     facebook_auth_token: Sequelize.STRING,
+    nombre: Sequelize.STRING,
+    apellido: Sequelize.STRING,
+    fecha_nacimiento: Sequelize.STRING,
   }, {
     timestamps: true,
     underscored: true,

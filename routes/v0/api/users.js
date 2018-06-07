@@ -13,7 +13,12 @@ router.get('/',validateLoggedUser ,withError(userController.v0.listUsers))
 /* parametros:
   "createdBy": "string",
   "createdTime": 0,
-  "name": "string",
+  "username": STRING,
+  "password": STRING,
+  "facebook_auth_token": STRING,
+  "nombre": STRING,
+  "apellido": STRING,
+  "fecha_nacimiento": STRING,
 */
 router.post('/',validateLoggedUser, withError(userController.v0.createUser))
 

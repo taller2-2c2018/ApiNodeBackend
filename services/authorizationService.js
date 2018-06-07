@@ -5,14 +5,15 @@ const jwt = require('jwt-simple')
 const moment = require('moment')
 
 const NECESSARY_PARAMS = [
-  'application_user_id']
+  'facebook_id']
 
-let createOneToken = (id, username, nombre, apellido, exp) => {
+let createOneToken = (id, username, nombre, apellido, facebook_id, exp) => {
   let payload = {
     user_id: id,
     username: username,
     nombre: nombre,
     apellido: apellido,
+    facebook_id: facebook_id,
     iat: moment().unix(),
     exp: exp
   }
@@ -26,7 +27,7 @@ module.exports = (models) => {
         try { 
           let errors = validateParams(params, NECESSARY_PARAMS)
           if (errors.length === 0) {
-            let user = await models.ApplicationUser.findOne({ where: { id: params.application_user_id } })
+            let user = await models.ApplicationUser.findOne({ where: { facebook_id: params.facebook_id } })
             if(user == null){
               reject(errorGetter.getServiceError('No existe el usuario'))
             } else {
@@ -40,6 +41,7 @@ module.exports = (models) => {
                 apellido: user.apellido,
                 _rev: user._rev,
                 password: user.password,
+                facebook_id: user.facebook_id,
                 facebook_auth_token: user.facebook_auth_token,
                 fecha_nacimiento: user.fecha_nacimiento,
               }

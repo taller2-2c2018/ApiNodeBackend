@@ -12,7 +12,8 @@ module.exports = (models) => {
             'username',
             '_rev',
             'password',
-            'facebook_auth_token'],
+            'facebook_auth_token',
+            'facebook_id'],
           order: [['id', 'ASC']],
           where: {
             server_id: server_id
@@ -36,6 +37,7 @@ module.exports = (models) => {
             password: params.password,
             facebook_auth_token: params.facebook_auth_token,
             nombre: params.nombre,
+            facebook_id: params.facebook_id,
             apellido: params.apellido,
             fecha_nacimiento: params.fecha_nacimiento,
           }

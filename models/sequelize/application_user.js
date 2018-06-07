@@ -11,6 +11,7 @@ module.exports = function (sequelize) {
     nombre: Sequelize.STRING,
     apellido: Sequelize.STRING,
     fecha_nacimiento: Sequelize.STRING,
+    facebook_id: Sequelize.STRING,
   }, {
     timestamps: true,
     underscored: true,

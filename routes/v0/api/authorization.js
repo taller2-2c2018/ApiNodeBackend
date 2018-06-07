@@ -8,7 +8,7 @@ let validateLoggedUser = authMiddleware.checkIsLoggedWithPermission()
 
 // Endpoint para dar de alta token para un usuario, ademas trae otros datos del usuario
 /* parametros:
-  "application_user_id": "string"
+  "facebook_id": "string"
 */
 router.post('/',validateLoggedUser, withError(authorizationController.v0.createToken))
 

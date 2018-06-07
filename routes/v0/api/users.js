@@ -19,6 +19,7 @@ router.get('/',validateLoggedUser ,withError(userController.v0.listUsers))
   "nombre": STRING,
   "apellido": STRING,
   "fecha_nacimiento": STRING,
+  "facebook_id": STRING,
 */
 router.post('/',validateLoggedUser, withError(userController.v0.createUser))
 

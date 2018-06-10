@@ -1,2 +1,2 @@
 web: npm run start-prod-heroku
-release: sequelize db:migrate
+release: node_modules/.bin/sequelize db:migrate

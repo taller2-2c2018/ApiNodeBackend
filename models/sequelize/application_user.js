@@ -18,6 +18,10 @@ module.exports = function (sequelize) {
     tableName: 'application_user'
   })
 
+  ApplicationUser.getMsgInexistente = function(){
+    return 'User inexistente'
+  }
+
   ApplicationUser.associate = function (models) {
     ApplicationUser.belongsTo(models.Server, {
       foreignKey: 'server_id',

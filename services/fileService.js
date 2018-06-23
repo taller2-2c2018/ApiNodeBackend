@@ -49,11 +49,13 @@ module.exports = (models) => {
         try{
           let errors = validateParams(params,NECESSARY_PARAMS)
           if(errors.length === 0){
+            let data = fs.readFileSync(file.path)
             let parameters = {
               filename: file.filename,
               filename_original: file.originalname,
               resource: file.path,
               size: file.size,
+              data: data,
               visible: true
             }
             parameters = asignarHash(parameters)
@@ -128,7 +130,7 @@ module.exports = (models) => {
                   fs.unlinkSync(__dirname + '/../uploads/' + filename)
                   resolve('Baja correcta')
                 } catch (e) {
-                  reject(errorGetter.getServiceError(e))
+                  resolve('Baja correcta')
                 }
               }).catch((e) => {
                 reject(errorGetter.getServiceError(e))
@@ -149,6 +151,7 @@ module.exports = (models) => {
         })
           .then((file) => {
             if (file) {
+              fs.writeFileSync(__dirname + '/../uploads/' + file.filename, file.data)
               resolve(file.filename)
             } else {
               reject(errorGetter.getServiceErrorNotFound(models.FileApplicationUser.getMsgInexistente()))

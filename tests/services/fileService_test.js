@@ -12,8 +12,9 @@ const fileService = require('../../services/fileService')(models)
 
 let idFileCreado
 let revViejo
-let originalname = 'originalname'
-let filename = 'filename'
+let originalname = 'pruebaCorta.json'
+let filename = 'pruebaCorta.json'
+let path = 'tests/archivos_para_pruebas/pruebaCorta.json'
 
 describe('Verificaciones sobre FileService', function () {
   it('Obtener un file que no existe', function (done) {
@@ -23,7 +24,6 @@ describe('Verificaciones sobre FileService', function () {
     })
   })
   it('Agregar un file', function (done) {
-    let path = 'un path'
     let params = {
       id: null,
       _rev: null,

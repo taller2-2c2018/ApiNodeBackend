@@ -19,6 +19,7 @@ module.exports = function (sequelize) {
     visible: Sequelize.BOOLEAN,
     _rev: Sequelize.STRING,
     size: Sequelize.INTEGER,
+    data: Sequelize.BLOB,
   }, {
     timestamps: true,
     underscored: true,

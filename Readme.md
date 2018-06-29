@@ -106,29 +106,3 @@ Para poder debuggear se debe ingresar a una consola del contenedor y una vez den
 $ npm run debug
 ```
 Esto arrancará la app en modo inspect en otro puerto, por defecto el 3001, que también fue configurado con forwarding en el docker-compose, por ejemplo en nuestro caso si con chrome accedemos al puerto 3051 vamos a poder debuggear utilizando las devtools.
-
-## FRONTEND
-
-
-Para levantar el backend se utiliza un contenedor basado en la imagen representada por el archivo *dockerfile-react*.
-
-El mismo esta basado en node  8.9.0 e instala además algunas dependencias que necesita el proyecto.
-
-Crea además un directorio /usr/src en el cual al momento de levantar el contenedor debe apuntar al codigo fuente.
-
-Entonces se debe construir esta imagen utilizando un comando como por ejemplo:
-```sh
-$ docker build --rm --no-cache -t node-front -f dockerfile-react . 
-```
-
-Con lo anterior se creará una imagen llamada **node-front**.
-
-En el docker-compose entonces tenemos que utilizar esta imagen, anteriormente ya se mostró un ejemplo de un archivo yml representando este caso.
-
-Al levantar el contenedor se ejecutará el comando:
-```sh
-$ npm run start-dock-dev
-```
-El mismo lo que hace es un npm install y además corre con webpack-dev-server el proyecto, por lo que se estarán eschuchando cambios.
-
-Por defecto la app corre en el puerto 3000 del contenedor, para utilizarla obviamente se debe utilizar el puerto que se haya configurado en el forwarding, en nuestro caso el 3020.

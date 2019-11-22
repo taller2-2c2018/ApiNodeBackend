@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express()
 
+var apiUsuarios = require('./api/null')
 var apiUsuarios = require('./api/usuarios')
 var apiRoles = require('./api/roles')
 var apiPermisos = require('./api/permisos')
@@ -10,6 +11,7 @@ var apiUsers = require('./api/users')
 var apiServers = require('./api/servers')
 var apiAuthorizations = require('./api/authorization')
 
+app.use('/api/null', apiNull)
 app.use('/api/usuarios', apiUsuarios)
 app.use('/api/roles', apiRoles)
 app.use('/api/permisos', apiPermisos)

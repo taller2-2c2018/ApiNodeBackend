@@ -18,7 +18,7 @@
     "reset_dev": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all "
   },
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
